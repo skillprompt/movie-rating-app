@@ -12,11 +12,6 @@ app.use(express.json());
 
 app.get("/", homeController);
 
-app.get("/home", (req, res) => {
-  const homeFile = fs.readFileSync(`${process.cwd()}/pages/home.html`);
-  res.send(homeFile.toString());
-});
-
 // movies routes
 createMovieRoute(app);
 
