@@ -11,6 +11,13 @@ export async function createMovieController(
   res: Response,
   next: NextFunction
 ) {
+  // const userType = "super_admin";
+  // if (userType !== "super_admin") {
+  //   res.status(403).json({
+  //     message: "you are not allowed to perform this operation",
+  //   });
+  // }
+
   try {
     const body = req.body;
     const parsed = CreateMovieSchema.safeParse(body);
