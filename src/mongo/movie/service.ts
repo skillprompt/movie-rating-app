@@ -51,7 +51,27 @@ async function updateMovie(toUpdateMovieId: string, input: Omit<TMovie, "id">) {
   );
 }
 
+async function getAllMovie() {
+  const movies = await MovieModel.find();
+  return movies;
+}
+
+async function getByIdMovie(movieId: string) {
+  const movie = await MovieModel.findById(movieId);
+  return movie;
+}
+
+async function deleteMovie(toDeleteMovieId: string) {
+  const movie = await MovieModel.findByIdAndDelete({
+    _id: toDeleteMovieId,
+  });
+  return movie;
+}
+
 export const movieMongoService = {
   createMovie,
   updateMovie,
+  getAllMovie,
+  getByIdMovie,
+  deleteMovie,
 };
