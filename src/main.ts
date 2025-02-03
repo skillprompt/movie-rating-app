@@ -8,6 +8,7 @@ import { connectMongoDb } from "./mongo-db";
 
 import { createReviewRoutes } from "./routes/review-route";
 import { MovieReviewAppError } from "./error";
+import { createAuthRoutes } from "./routes/auth-route";
 
 connectMongoDb().then(() => {
   console.log(`MongoDB connected!!`);
@@ -30,6 +31,9 @@ createMovieRoutes(app);
 
 //review routes
 createReviewRoutes(app);
+
+// auth routes
+createAuthRoutes(app);
 
 //global error handler
 
