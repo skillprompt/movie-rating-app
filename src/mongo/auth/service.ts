@@ -42,11 +42,17 @@ function deleteUser() {}
 
 function getAllUsers() {}
 
-function getUserByEmail() {}
+async function getUserByEmail(input: { email: string }) {
+  const user = await UserModel.findOne({
+    email: input.email,
+  });
+  return user;
+}
 
 function getUserById() {}
 
 export const userMongoService = {
   createUser,
   updateUser,
+  getUserByEmail,
 };
