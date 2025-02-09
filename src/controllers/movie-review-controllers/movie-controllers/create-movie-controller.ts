@@ -5,19 +5,13 @@ import { InvalidMovieReviewPayload } from "../../../services/movie-review-errors
 import { movieService } from "../../../services/movie";
 import { movieMongoService } from "../../../mongo/movie/service";
 import { MovieReviewAppError } from "../../../error";
+import { verifyToken } from "../../../utils/jwt";
 
 export async function createMovieController(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  // const userType = "super_admin";
-  // if (userType !== "super_admin") {
-  //   res.status(403).json({
-  //     message: "you are not allowed to perform this operation",
-  //   });
-  // }
-
   try {
     const body = req.body;
     const parsed = CreateMovieSchema.safeParse(body);
@@ -48,8 +42,7 @@ export async function createMovieController(
       message: "Movie added successfully.",
     });
   } catch (error) {
-    console.error(error);
-    if ((error as any).errorResponse.code === 11000) {
+    if ((error as any).errorResponse?.code === 11000) {
       const movieError = new MovieReviewAppError(
         "Failed to create the movie. Please choose unique title",
         400

@@ -4,10 +4,12 @@ import { getAllMovieController } from "../controllers/movie-review-controllers/m
 import { updateMovieController } from "../controllers/movie-review-controllers/movie-controllers/update-movie-controller";
 import { getMovieByIdController } from "../controllers/movie-review-controllers/movie-controllers/getById-movie-controller";
 import { deleteMovieController } from "../controllers/movie-review-controllers/movie-controllers/delete-movie-controller";
+import { authMiddleware } from "../utils/auth-middleware";
+
 export function createMovieRoutes(app: Express) {
   //mutation
 
-  app.post("/movies/create", createMovieController);
+  app.post("/movies/create", authMiddleware, createMovieController);
   app.put("/movies/update/:movieId", updateMovieController);
   app.delete("/movies/delete/:movieId", deleteMovieController);
   //queries
