@@ -23,7 +23,10 @@ export function authMiddleware(
       return;
     }
 
-    verifyToken(token);
+    const payload = verifyToken(token);
+
+    // @ts-expect-error remove this error research
+    req.user = payload;
 
     next();
   } catch (error) {

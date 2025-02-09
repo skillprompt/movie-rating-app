@@ -5,7 +5,7 @@ import { InvalidMovieReviewPayload } from "../../../services/movie-review-errors
 import { movieService } from "../../../services/movie";
 import { movieMongoService } from "../../../mongo/movie/service";
 import { MovieReviewAppError } from "../../../error";
-import { verifyToken } from "../../../utils/jwt";
+import { TPayload } from "../../../utils/jwt";
 
 export async function createMovieController(
   req: Request,
@@ -13,6 +13,9 @@ export async function createMovieController(
   next: NextFunction
 ) {
   try {
+    // @ts-expect-error fix by research
+    const authenticatedUser = req.user as TPayload;
+
     const body = req.body;
     const parsed = CreateMovieSchema.safeParse(body);
     if (!parsed.success) {
@@ -35,6 +38,7 @@ export async function createMovieController(
         description: parsed.data.description,
         release_year: parsed.data.release_year,
         genre: parsed.data.genre,
+        created_by_id: authenticatedUser.id,
       });
     }
 
