@@ -7,18 +7,29 @@ export function authMiddleware(
   next: NextFunction
 ) {
   try {
-    const token = req.headers.mytoken;
+    const authorizationHeader =
+      req.headers.authorization || req.cookies["authorization"];
+    `Bearer eyldjkjaghhfkna.fhjakhfja.fhaj`;
 
-    if (!token) {
+    if (!authorizationHeader) {
       res.status(401).json({
-        message: "Token not found",
+        message: "Token not found in header",
       });
       return;
     }
 
-    if (typeof token !== "string") {
+    if (typeof authorizationHeader !== "string") {
       res.status(401).json({
         message: "Token is not a string",
+      });
+      return;
+    }
+
+    const token = authorizationHeader?.split(" ")[1] || "";
+
+    if (!token) {
+      res.status(401).json({
+        message: "Token not found",
       });
       return;
     }
